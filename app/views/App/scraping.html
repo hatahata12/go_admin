@@ -1,0 +1,67 @@
+{{set . "title" "管理画面"}}
+{{template "header.html" .}}
+<div class="page-content">
+    <div class="row">
+        {{template "menu.html" .}}
+        <div class="col-md-10">
+
+            <div class="row">
+                <div class="col-md-12 panel-warning">
+                    <div class="content-box-header panel-heading">
+                        <div class="panel-title ">スクレイピング状況</div>
+
+                        <div class="panel-options">
+                            <a href="/app/scraping/" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                        </div>
+                    </div>
+                    <div class="content-box-large box-with-header">
+                        <div class="content-box-large">
+                            <div class="panel-body">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>プロセスID</th>
+                                                <th>起動ステータス</th>
+                                                <th>処理件数</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {{if .pid}}
+                                        <tr class="success">
+                                            {{else}}
+                                        <tr>
+                                            {{end}}
+                                            <td>{{.pid}}</td>
+                                            {{if .pid}}
+                                                <td>起動中</td>
+                                            {{else}}
+                                            <td>停止中</td>
+                                            {{end}}
+                                            <td>{{.count}}</td>
+                                                <td>
+                                                    {{if .pid}}
+                                                    <form method="post" action="/app/stop/">
+                                                        <input type="hidden" name="pid" value="{{.pid}}"/>
+                                                        <input type="submit" class="btn btn-success btn-sm" value="停止"/>
+                                                    </form>
+                                                    {{else}}
+                                                    <form method="post" action="/app/start/">
+                                                        <input type="submit" class="btn btn-success btn-sm" value="開始" />
+                                                    </form>
+                                                    {{end}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{template "footer.html" .}}
